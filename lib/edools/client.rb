@@ -10,7 +10,7 @@ module Edools
     end
 
     def schools
-      @schools ||= Resource::Schools.new(@settings)
+      Resource::Schools.new(@settings)
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'edools/object/course'
+
 module Edools
   module Resource
     class Courses
@@ -9,20 +11,22 @@ module Edools
 
       def all
         response = @request.get(@endpoint)
-        response.body
-        # TODO
+        data = Oj.load(response.body)
+        data['courses'].map! { |course| Object::Course.new(@settings, course) }
+        data
       end
 
-      def create(obj)
-        # TODO
-      end
-
-      def update(obj)
-        # TODO
+      def create(name, extra = {})
+        opts = extra.merge(name: name)
+        response = @request.post(@endpoint, course: opts)
+        data = Oj.load(response.body)
+        Object::Course.new(@settings, data)
       end
 
       def find(id)
-        # TODO
+        response = @request.get("#{@endpoint}/#{id}")
+        data = Oj.load(response.body)
+        Object::Course.new(@settings, data)
       end
     end
   end

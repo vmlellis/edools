@@ -21,7 +21,10 @@ module Edools
         opts = { name: name, email: email, password: password }
         response = @request.post("#{@endpoint}/wizard", school: opts)
         data = Oj.load(response.body)
-        Object::School.new(@settings, data['school'])
+        {
+          token: data['admin']['credentials'],
+          school: Object::School.new(@settings, data['school'])
+        }
       end
 
       def find(id)

@@ -19,6 +19,10 @@ module Edools
         @data = data
       end
 
+      def id
+        @data['id']
+      end
+
       def courses
         @courses ||= Resource::Courses.new(@settings, @data['subdomain'])
       end
