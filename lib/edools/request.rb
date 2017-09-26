@@ -15,6 +15,7 @@ module Edools
         faraday.adapter :typhoeus
       end
       @conn.authorization(:Token, token: settings.token) if settings.token
+      @headers = { accept: 'application/vnd.edools.core.v1+json' }
     end
 
     def method_missing(method, *args, &block)
@@ -29,7 +30,7 @@ module Edools
     private
 
     def make_request(method, endpoint, params = {})
-      @conn.send(method, endpoint, params, {})
+      @conn.send(method, endpoint, params, @headers)
     end
   end
 end

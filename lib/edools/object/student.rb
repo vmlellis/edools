@@ -1,6 +1,6 @@
 module Edools
   module Object
-    class SchoolProduct
+    class Student
       attr_accessor :data
 
       def initialize(settings, data)
