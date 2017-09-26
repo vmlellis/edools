@@ -1,13 +1,15 @@
 module Edools
   module Resource
     class Courses
-      def initialize(request)
-        endpoint = '/courses'
-        klass = ::Edools::Object::Course
-        @resource = MainResource.new(request, endpoint, klass)
+      def initialize(settings, subdomain)
+        @endpoint = '/api/courses'
+        @settings = settings
+        @request = Request.new(settings, subdomain)
       end
 
       def all
+        response = @request.get(@endpoint)
+        response.body
         # TODO
       end
 

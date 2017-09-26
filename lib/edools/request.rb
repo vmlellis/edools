@@ -1,21 +1,20 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'typhoeus/adapters/faraday'
-require 'oj'
 
 module Edools
   class Request
-    METHODS = %i[get post put delete].freeze
+    METHODS = %i[get post patch put delete].freeze
 
-    def initialize(token, school = nil)
-      subdomain = school || 'core'
-      url = "https://#{subdomain}.myedools.info/"
+    def initialize(settings, subdomain = nil)
+      url = settings.url(subdomain)
       @conn = Faraday.new(url: url) do |faraday|
         faraday.request :url_encoded
+        faraday.response :logger
         faraday.response :json, content_type: 'application/json'
         faraday.adapter :typhoeus
       end
-      @conn.authorization :Token, token: token
+      @conn.authorization(:Token, token: settings.token) if settings.token
     end
 
     def method_missing(method, *args, &block)
@@ -30,11 +29,7 @@ module Edools
     private
 
     def make_request(method, endpoint, params = {})
-      response = @conn.send(method) do |req|
-        req.url endpoint, params
-      end
-      body = response.body
-      Oj.load(body)
+      @conn.send(method, endpoint, params, {})
     end
   end
 end

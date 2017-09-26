@@ -1,15 +1,16 @@
+require 'edools/settings'
 require 'edools/resource/schools'
 
 module Edools
   class Client
-    attr_accessor :token
+    attr_accessor :settings
 
     def initialize(opts = {})
-      @token = opts[:token]
+      @settings = Settings.new(opts)
     end
 
     def schools
-      @schools ||= Resource::Schools.new(token)
+      @schools ||= Resource::Schools.new(@settings)
     end
   end
 end
