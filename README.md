@@ -32,7 +32,7 @@ Edools.settings.token = 'TOKEN_ADM'
 
 O retorno será:
 
-```json
+```ruby
 { credentials: 'SCHOOL_TOKEN', school_id: SCHOOL_ID }
 ```
 
