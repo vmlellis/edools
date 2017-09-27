@@ -1,5 +1,6 @@
 # Edools
 [![Build Status](https://travis-ci.org/vmlellis/edools.svg?branch=master)](https://travis-ci.org/vmlellis/edools)
+[![Coverage Status](https://coveralls.io/repos/github/vmlellis/edools/badge.svg?branch=master)](https://coveralls.io/github/vmlellis/edools?branch=master)
 
 Essa gem tem como objetivo automatizar a integração com a Rest API da Edools.
 
