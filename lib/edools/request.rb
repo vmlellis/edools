@@ -9,7 +9,7 @@ module Edools
     def initialize(settings, subdomain = nil)
       @conn = Faraday.new(url: settings.url) do |faraday|
         faraday.request :url_encoded
-        faraday.response :logger
+        faraday.response :logger if settings.http_logger
         faraday.response :json, content_type: 'application/json'
         faraday.adapter :typhoeus
       end

@@ -2,6 +2,7 @@ require 'edools/version'
 require 'edools/client'
 require 'edools/request'
 
+# Gem Edools
 module Edools
   class << self
     def client

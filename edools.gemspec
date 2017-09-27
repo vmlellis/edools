@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'oj', '~> 3.3'
   spec.add_development_dependency 'rubocop', '~> 0.50'
   spec.add_development_dependency 'coveralls', '~> 0.8.21'
+  spec.add_development_dependency 'webmock', '~> 3.0'
 end
