@@ -20,7 +20,7 @@ Ou instale manualmente:
 
     $ gem install edools
 
-## Uso
+## Utilização
 
 ### Primeira configuração - Criar a escola
 
