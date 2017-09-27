@@ -1,28 +1,98 @@
-# Edools::Gem
+# Edools
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/edools/gem`. To experiment with that code, run `bin/console` for an interactive prompt.
+Essa gem tem como objetivo automatizar a integração com a Rest API da Edools.
 
-TODO: Delete this and the text above, and describe your gem
+## Instalação
 
-## Installation
-
-Add this line to your application's Gemfile:
+Adicione a linha abaixo no arquivo ``Gemfile`` da sua aplicação:
 
 ```ruby
-gem 'edools'
+gem 'edools', git: 'https://github.com/vmlellis/edools'
 ```
 
-And then execute:
+E então execute:
 
     $ bundle
 
-Or install it yourself as:
+Ou instale manualmente:
 
     $ gem install edools
 
-## Usage
+## Uso
 
-TODO: Write usage instructions here
+### Primeira configuração - Criar a escola
+
+Adicione o token (credencial) administrativa:
+
+```ruby
+Edools.settings.token = 'TOKEN_ADM'
+```
+
+O retorno será:
+
+```json
+{ credentials: 'SCHOOL_TOKEN', school_id: SCHOOL_ID }
+```
+
+### Carregando a escola
+
+Para carregar a escola:
+
+```ruby
+Edools.settings.token = 'SCHOOL_TOKEN'
+Edools.settings.school_id = SCHOOL_ID
+school = Edools.schools.get
+```
+
+### Atualizar atributos da escola
+
+```ruby
+school.data['terms_of_use'] = 'new_terms_of_use'
+school.update
+```
+
+### Criar novo curso
+
+```ruby
+school.courses.create('title')
+```
+
+### Listar cursos
+
+```ruby
+school.courses.all
+```
+
+### Criar novo produto da escola
+
+```ruby
+school.products.create('name')
+```
+
+### Listar produtos da escola
+
+```ruby
+school.products.all
+```
+
+### Criar aluno
+
+```ruby
+school.students.create('first_name', 'email@email.com', 'password')
+```
+
+### Listar todos alunos de uma escola
+
+```ruby
+school.students.all
+```
+
+### Listar todos alunos de um produto
+
+```ruby
+product = school.products.find(PRODUCT_ID)
+product.students.all
+```
 
 ## Development
 
@@ -32,7 +102,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/edools.
+Bug reports and pull requests are welcome on GitHub at https://github.com/vmlellis/edools.
 
 ## License
 

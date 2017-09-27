@@ -3,6 +3,7 @@ require 'oj'
 
 module Edools
   module Resource
+    # Resource to schools
     class Schools
       def initialize(settings)
         @endpoint = '/schools'
@@ -21,16 +22,28 @@ module Edools
         opts = { name: name, email: email, password: password }
         response = @request.post("#{@endpoint}/wizard", school: opts)
         data = Oj.load(response.body)
+        return data if data.key?('errors')
         {
-          token: data['admin']['credentials'],
-          school: Object::School.new(@settings, data['school'])
+          credentials: data['admin']['credentials'],
+          subdomain: data['school']['subdomain'],
+          school_id: data['school']['id']
         }
+      end
+
+      def get
+        find(@settings.school_id)
       end
 
       def find(id)
         response = @request.get("#{@endpoint}/#{id}")
         data = Oj.load(response.body)
         Object::School.new(@settings, data)
+      end
+
+      def update(school)
+        opts = { school: school.data_to_update }
+        response = @request.put("#{@endpoint}/#{school.id}", opts)
+        raise 'School not updated' if response.status != 204
       end
     end
   end

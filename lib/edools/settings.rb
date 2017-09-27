@@ -1,6 +1,6 @@
 module Edools
   class Settings
-    attr_accessor :token
+    attr_accessor :token, :school_id
     attr_reader :enviroment
 
     def initialize(opts = {})
@@ -8,8 +8,8 @@ module Edools
       @token = opts[:token]
     end
 
-    def url(subdomain)
-      "https://#{subdomain || 'core'}.myedools.info/"
+    def url
+      'https://core.myedools.info/'
     end
   end
 end

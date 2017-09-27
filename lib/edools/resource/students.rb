@@ -2,18 +2,19 @@ require 'edools/object/student'
 
 module Edools
   module Resource
+    # Resource to students
     class Students
-      def initialize(settings, subdomain)
+      def initialize(settings)
         @endpoint = '/api/students'
         @settings = settings
-        @request = Request.new(settings, subdomain)
+        @request = Request.new(settings)
       end
 
       def all(opts = {})
-        response = @request.get(@endpoint)
+        response = @request.get(@endpoint, opts)
         data = Oj.load(response.body)
-        data['students'].map! do |course|
-          Object::Student.new(@settings, course)
+        data['students'].map! do |student|
+          Object::Student.new(@settings, student)
         end
         data
       end
@@ -32,6 +33,12 @@ module Edools
         response = @request.get("#{@endpoint}/#{id}")
         data = Oj.load(response.body)
         Object::Student.new(@settings, data)
+      end
+
+      def update(student)
+        opts = { user: student.data_to_update }
+        response = @request.put("#{@endpoint}/#{student.id}", opts)
+        raise 'Student not updated' if response.status != 204
       end
     end
   end

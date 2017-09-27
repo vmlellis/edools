@@ -7,8 +7,7 @@ module Edools
     METHODS = %i[get post patch put delete].freeze
 
     def initialize(settings, subdomain = nil)
-      url = settings.url(subdomain)
-      @conn = Faraday.new(url: url) do |faraday|
+      @conn = Faraday.new(url: settings.url) do |faraday|
         faraday.request :url_encoded
         faraday.response :logger
         faraday.response :json, content_type: 'application/json'

@@ -1,9 +1,11 @@
+require 'edools/resource/schools'
 require 'edools/resource/courses'
-require 'edools/resource/school_products'
 require 'edools/resource/students'
+require 'edools/resource/school_products'
 
 module Edools
   module Object
+    # School Object
     class School
       attr_accessor :data
 
@@ -26,27 +28,23 @@ module Edools
       end
 
       def courses
-        @courses ||= Resource::Courses.new(@settings, @data['subdomain'])
+        @courses ||= Resource::Courses.new(@settings)
       end
 
       def products
-        @products ||= begin
-          Resource::SchoolProducts.new(@settings, @data['subdomain'])
-        end
+        @products ||= Resource::SchoolProducts.new(
+          @settings, @data['subdomain'], @data['id']
+        )
       end
 
       def students
-        @students ||= Resource::Students.new(@settings, @data['subdomain'])
+        @students ||= Resource::Students.new(@settings)
       end
 
       def update
-        request = Edools::Request.new(@settings)
-        opts = { school: data_to_update }
-        response = request.put("/schools/#{@data['id']}", opts)
-        raise 'Object not update' if response.status != 204
+        @schools ||= Resource::Schools.new(@settings)
+        @schools.update(self)
       end
-
-      private
 
       def data_to_update
         @data.select { |k, _| KEYS_UPDATE.include?(k) }
