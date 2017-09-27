@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'typhoeus', '~> 1.3'
   spec.add_development_dependency 'oj', '~> 3.3'
   spec.add_development_dependency 'rubocop', '~> 0.50'
+  spec.add_development_dependency 'coveralls', '~> 0.8.21'
 end
