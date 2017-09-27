@@ -6,7 +6,7 @@ module Edools
     # Resource to schools
     class Schools
       def initialize(settings)
-        @endpoint = '/schools'
+        @endpoint = '/api/schools'
         @settings = settings
         @request = Request.new(settings)
       end
@@ -25,7 +25,6 @@ module Edools
         return data if data.key?('errors')
         {
           credentials: data['admin']['credentials'],
-          subdomain: data['school']['subdomain'],
           school_id: data['school']['id']
         }
       end
