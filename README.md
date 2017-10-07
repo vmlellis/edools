@@ -96,6 +96,32 @@ product = school.products.find(PRODUCT_ID)
 product.students.all
 ```
 
+### Parte 2
+
+### Criar sessão
+
+```ruby
+Edools.settings.subdomain = 'SUBDOMAIN'
+Edools.settings.school_id = SCHOOL_ID
+session_data = Edools.sessions.create(EMAIL, PASSWORD)
+
+Edools.settings.token = session_data['credentials']
+```
+
+### Carregar url de uma mídia
+
+```ruby
+media = Edools.media.get(MEDIA_ID)
+s3_file_url = media['s3_file_url']
+```
+
+### Importar CSV
+
+```ruby
+loader = Edools.loader.csv(CSV_PATH)
+loader.start
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

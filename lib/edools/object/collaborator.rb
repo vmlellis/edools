@@ -1,10 +1,10 @@
-require 'edools/resource/students'
+require 'edools/resource/collaborators'
 require 'edools/resource/enrollments'
 
 module Edools
   module Object
-    # Student Object
-    class Student
+    # Collaborator Object
+    class Collaborator
       attr_accessor :data
 
       KEYS_UPDATE = %w[
@@ -24,21 +24,12 @@ module Edools
       end
 
       def update
-        @students ||= Resource::Students.new(@settings)
-        @students.update(self)
+        @collaborators ||= Resource::Collaborators.new(@settings)
+        @collaborators.update(self)
       end
 
       def data_to_update
         @data.select { |k, _| KEYS_UPDATE.include?(k) }
-      end
-
-      def registered_school_product_id?(school_product_id)
-        school_registration['enrollments'].each do |enrollment|
-          product = enrollment['school_product']
-          next unless product
-          return true if school_product_id == product['id']
-        end
-        false
       end
 
       def school_registration_id
@@ -54,11 +45,6 @@ module Edools
           end
           {}
         end
-      end
-
-      def enrollment_school_product(school_product_id)
-        @enrollments ||= Resource::Enrollments.new(@settings)
-        @enrollments.create(school_registration_id, school_product_id)
       end
     end
   end
